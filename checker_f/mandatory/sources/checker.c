@@ -6,7 +6,7 @@
 /*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:49:57 by rchallie          #+#    #+#             */
-/*   Updated: 2021/03/13 17:58:39 by rchallie         ###   ########.fr       */
+/*   Updated: 2021/03/13 18:31:35 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,24 @@ int check_arguments(char **argv)
 	return (SUCCES);
 }
 
+
+
+int *get_content_from_argument(char *arg)
+{
+	int *content;
+	long tmp_cont;
+
+	content = NULL;
+	tmp_cont = ft_atol(arg);
+	if (tmp_cont < INT_MIN || tmp_cont > INT_MAX)
+		return (NULL);
+	content = malloc(sizeof(int));
+	if (!content)
+		return (NULL);
+	*content = (int)tmp_cont;
+	return (content);
+}
+
 /*
 ** push_arguments:
 ** ---------------
@@ -69,14 +87,15 @@ int push_arguments(char **argv, t_list **a)
 	while (argv[count])
 	{
 		tmp = NULL;
-		content = NULL;
-		content = malloc(sizeof(int));
-		if (!content)
+		content = get_content_from_argument(argv[count]);
+		if (content == NULL)
 			return (ERROR);
-		*content = ft_atoi(argv[count]);
 		tmp = malloc(sizeof(t_list));
 		if (!tmp)
+		{
+			free(content);
 			return (ERROR);
+		}
 		tmp->next = NULL;
 		tmp->content = content;
 		ft_lstadd_back(a, tmp);
@@ -85,46 +104,7 @@ int push_arguments(char **argv, t_list **a)
 	return (SUCCES);
 }
 
-/*
-** clear:
-** ------
-**
-**		Clear allocated things ("a & b" stacks, ...).
-**
-**	@param a the "a" stack.
-**	@param b the "b" stack.
-**
-*/
-
-void clear(t_list **a, t_list **b)
-{
-	if (*a)
-		ft_lstclear(a, free);
-	if (*b)
-		ft_lstclear(b, free);
-}
-
-/*
-** error:
-** ------
-**
-**		Call to clear allocated things and print "Error" in
-**	the error output.
-**
-**	@param a the "a" stack.
-**	@param b the "b" stack.
-**	@return ERROR (1).
-**
-*/
-
-int error(t_list **a, t_list **b)
-{
-	clear(a, b);
-	ft_putstr_fd("Error\n", 2);
-	return (ERROR);
-}
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_list *a;
 	t_list *b;

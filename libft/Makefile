@@ -6,7 +6,7 @@
 #    By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 11:05:52 by rchallie          #+#    #+#              #
-#    Updated: 2020/08/13 22:17:48 by rchallie         ###   ########.fr        #
+#    Updated: 2021/03/13 18:23:11 by rchallie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS = ft_memset.c		\
 		ft_strlcat.c		\
 		ft_strnstr.c		\
 		ft_atoi.c		\
+		ft_atol.c		\
 		ft_calloc.c		\
 		ft_strdup.c		\
 		ft_substr.c		\
