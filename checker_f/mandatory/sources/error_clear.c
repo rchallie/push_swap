@@ -6,7 +6,7 @@
 /*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 18:25:06 by rchallie          #+#    #+#             */
-/*   Updated: 2021/03/13 18:29:39 by rchallie         ###   ########.fr       */
+/*   Updated: 2021/03/13 22:28:45 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@
 **
 */
 
-void clear(t_list **a, t_list **b)
+void clear(t_list **a, t_list **b, t_list **instructions)
 {
 	if (*a)
 		ft_lstclear(a, free);
 	if (*b)
 		ft_lstclear(b, free);
+	if (*instructions)
+		ft_lstclear(instructions, free);
 }
 
 /*
@@ -44,9 +46,9 @@ void clear(t_list **a, t_list **b)
 **
 */
 
-int error(t_list **a, t_list **b)
+int error(t_list **a, t_list **b, t_list **instructions)
 {
-	clear(a, b);
+	clear(a, b, instructions);
 	ft_putstr_fd("Error\n", 2);
 	return (ERROR);
 }

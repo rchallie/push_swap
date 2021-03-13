@@ -6,7 +6,7 @@
 /*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 14:49:57 by rchallie          #+#    #+#             */
-/*   Updated: 2021/03/13 18:31:35 by rchallie         ###   ########.fr       */
+/*   Updated: 2021/03/13 22:27:41 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@
 ** 
 */
 
+// Add test if already in arg
+// Move to common
 int check_arguments(char **argv)
 {
 	int count;
 	int char_count;
+	long tmp_cont;
 
 	count = 1;
 	while (argv[count])
@@ -40,26 +43,36 @@ int check_arguments(char **argv)
 				return (ERROR);
 			char_count++;
 		}
+		tmp_cont = ft_atol(argv[count]);
+		if (tmp_cont < INT_MIN || tmp_cont > INT_MAX)
+			return (ERROR);
 		count++;
 	}
-	return (SUCCES);
+	return (SUCCESS);
 }
 
+/*
+** get_content_from_argument:
+** --------------------------
+**
+**		Transform an argument from the command line
+**	to the content of stack.
+**
+**	@param arg the argument to transform.
+**	@return the content or NULL if malloc fail.
+**
+*/
 
-
+// Move to common
 int *get_content_from_argument(char *arg)
 {
 	int *content;
-	long tmp_cont;
 
 	content = NULL;
-	tmp_cont = ft_atol(arg);
-	if (tmp_cont < INT_MIN || tmp_cont > INT_MAX)
-		return (NULL);
 	content = malloc(sizeof(int));
 	if (!content)
 		return (NULL);
-	*content = (int)tmp_cont;
+	*content = ft_atoi(arg);
 	return (content);
 }
 
@@ -75,8 +88,10 @@ int *get_content_from_argument(char *arg)
 **  @param argv the arguments given in the command line.
 **	@param a the "a" stack.
 **	@return SUCCESS (0) or ERROR (1).
+**
 */
 
+// Move to common
 int push_arguments(char **argv, t_list **a)
 {
 	int count;
@@ -101,20 +116,23 @@ int push_arguments(char **argv, t_list **a)
 		ft_lstadd_back(a, tmp);
 		count++;
 	}
-	return (SUCCES);
+	return (SUCCESS);
 }
 
 int	main(int argc, char **argv)
 {
 	t_list *a;
 	t_list *b;
+	t_list *instructions;
 
 	a = NULL;
 	b = NULL;
+	instructions = NULL;
 	if (check_arguments(argv) == ERROR
-		|| push_arguments(argv, &a) == ERROR)
-		return (error(&a, &b));
-	clear(&a, &b);
+		|| push_arguments(argv, &a) == ERROR
+		|| get_sequence(&instructions))
+		return (error(&a, &b, &instructions));
+	clear(&a, &b, &instructions);
 	
 	(void)argc;
 	(void)a;
