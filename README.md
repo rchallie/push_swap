@@ -10,4 +10,4 @@ Push_Swap (42cursus) 2019-2021
 
 This is our push_swap project from the 42 cursus,
 need help:
-rchallie@student.42.fr thervieu@student.42.fr
+rchallie@student.42.fr
